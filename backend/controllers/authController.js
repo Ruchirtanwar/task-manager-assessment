@@ -164,6 +164,7 @@ export const loginUser = async (req, res, next) => {
 // @desc    Forgot password
 // @route   POST /api/auth/forgot-password
 // @access  Public
+
 export const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -269,6 +270,7 @@ export const forgotPassword = async (req, res, next) => {
 // @desc    Reset password
 // @route   POST /api/auth/reset-password
 // @access  Public
+//update resetpassword to get email link 
 export const resetPassword = async (req, res, next) => {
   try {
 

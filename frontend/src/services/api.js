@@ -34,8 +34,6 @@ export const authApi = {
 
   const data = await handleResponse(response);
 
-  console.log("LOGIN RESPONSE:", data);
-
   return data;
 },
   

@@ -35,6 +35,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(response.user));
       localStorage.setItem('token', response.token);
       toast.success('Successfully logged in!');
+      console.log("from authcontext",token);
+      
       return true;
     } catch (error) {
       toast.error(error.message || 'Login failed');

@@ -22,7 +22,6 @@ const handleSubmit = async (e) => {
 
   setIsSubmitting(false);
 };
-
   const handleResend = async () => {
     if (!email) {
       alert('Please enter your email address first');

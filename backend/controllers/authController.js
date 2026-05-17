@@ -51,9 +51,8 @@ export const registerUser = async (req, res, next) => {
 
     await user.save();
 
-    // Frontend URL
-     const verificationUrl =
-`http://localhost:3000/api/auth/verify-email?token=${verificationToken}`;
+    // Dynamic Host resolution for backend verification endpoint
+    const verificationUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email?token=${verificationToken}`;
     // Send Email
     await sendEmail({
       to: user.email,
@@ -341,113 +340,60 @@ export const resetPassword = async (req, res, next) => {
 // @access  Public
 //updated the verify-Email accordingly to googleoAuth  
 
-export const verifyEmail = async (req, res, next) => {
+// @desc    Redirect GET verify email requests to Frontend
+// @route   GET /api/auth/verify-email
+// @access  Public
+export const verifyEmailGET = async (req, res, next) => {
   try {
-
     const { token } = req.query;
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    // Redirect browser directly to frontend React verification page
+    res.redirect(`${clientUrl}/verify-email?token=${token}`);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Process POST verify email programmatic requests from React
+// @route   POST /api/auth/verify-email
+// @access  Public
+export const verifyEmailPOST = async (req, res, next) => {
+  try {
+    const { token } = req.body;
 
     if (!token) {
-      return res.send(`
-        <h1>Verification Failed</h1>
-        <p>Token missing.</p>
-      `);
+      res.status(400);
+      throw new Error("Token missing");
     }
 
     let decoded;
-
     try {
-
-      decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET
-      );
-
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
-
-      return res.send(`
-        <h1>Invalid Token</h1>
-        <p>Token expired or invalid.</p>
-      `);
+      res.status(400);
+      throw new Error("Invalid or expired token");
     }
 
     const user = await User.findOne({
       _id: decoded.id,
       verificationToken: token,
-      verificationTokenExpire: {
-        $gt: Date.now(),
-      },
+      verificationTokenExpire: { $gt: Date.now() },
     });
 
     if (!user) {
-
-      return res.send(`
-        <h1>Verification Failed</h1>
-        <p>User not found or token expired.</p>
-      `);
-
+      res.status(400);
+      throw new Error("User not found or token expired");
     }
 
     user.verified = true;
-
     user.verificationToken = undefined;
     user.verificationTokenExpire = undefined;
-
     await user.save();
 
-    // SUCCESS HTML PAGE
-
-    res.send(`
-      <div style="
-        height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        background:#f4f4f4;
-        font-family:Arial;
-      ">
-
-        <div style="
-          background:white;
-          padding:40px;
-          border-radius:10px;
-          text-align:center;
-          width:400px;
-          box-shadow:0 0 10px rgba(0,0,0,0.1);
-        ">
-
-          <h1 style="color:green;">
-            Email Verified Successfully ✅
-          </h1>
-
-          <p style="
-            color:#555;
-            margin-top:20px;
-            line-height:1.6;
-          ">
-            Your account has been verified successfully.
-            You can now login to your account.
-          </p>
-
-          <a
-            href="http://localhost:5173/login"
-            style="
-              display:inline-block;
-              margin-top:30px;
-              padding:12px 20px;
-              background:#111;
-              color:white;
-              text-decoration:none;
-              border-radius:6px;
-            "
-          >
-            Go To Login
-          </a>
-
-        </div>
-
-      </div>
-    `);
-
+    res.status(200).json({
+      success: true,
+      message: "Email verified successfully!",
+    });
   } catch (error) {
     next(error);
   }
@@ -485,8 +431,7 @@ user.verificationTokenExpire =
 
 await user.save();
 
-const verificationUrl =
-`http://localhost:3000/api/auth/verify-email?token=${verificationToken}`;
+const verificationUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email?token=${verificationToken}`;
 
     const message = `Please click on the link below to verify your email: \n\n ${verificationUrl}`;
 
@@ -571,7 +516,7 @@ export default {
   loginUser,
   forgotPassword,
   resetPassword,
-  verifyEmail,
+  verifyEmailGET,
+  verifyEmailPOST,
   resendVerificationEmail,
-
 };

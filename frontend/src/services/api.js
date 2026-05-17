@@ -23,14 +23,21 @@ const handleResponse = async (response) => {
 };
 
 export const authApi = {
-  login: async (email, password) => {
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify({ email, password })
-    });
-    return handleResponse(response);
-  },
+ login: async (email, password) => {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await handleResponse(response);
+
+  console.log("LOGIN RESPONSE:", data);
+
+  return data;
+},
   
   register: async (name, email, password) => {
     const response = await fetch(`${API_URL}/auth/register`, {

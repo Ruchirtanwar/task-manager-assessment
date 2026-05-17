@@ -11,6 +11,7 @@ const generateToken = (id) => {
 // @desc    Register new user
 // @route   POST /api/auth/register
 // @access  Public
+//improved authentication
 export const registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -127,6 +128,7 @@ export const registerUser = async (req, res, next) => {
 // @desc    Authenticate a user
 // @route   POST /api/auth/login
 // @access  Public
+//improved authentication
 export const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -335,7 +337,7 @@ export const resetPassword = async (req, res, next) => {
 // @desc    Verify email
 // @route   GET /api/auth/verify-email
 // @access  Public
-// verification email part 3
+
 export const verifyEmail = async (req, res, next) => {
   try {
 

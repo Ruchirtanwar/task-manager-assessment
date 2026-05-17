@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { CheckSquare } from 'lucide-react';
 
@@ -9,12 +9,16 @@ const RegisterForm = () => {
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await register(name, email, password);
+    const success = await register(name, email, password);
     setIsSubmitting(false);
+    if (success) {
+      navigate('/login');
+    }
   };
 
   return (

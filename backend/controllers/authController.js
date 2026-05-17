@@ -29,8 +29,8 @@ export const registerUser = async (req, res, next) => {
       throw new Error("User already exists");
     }
 
-    // Create User
-    const user = await User.create({
+    // Create User Instance (not saved yet)
+    const user = new User({
       name,
       email,
       password,
@@ -45,10 +45,9 @@ export const registerUser = async (req, res, next) => {
     );
 
     user.verificationToken = verificationToken;
+    user.verificationTokenExpire = Date.now() + 10 * 60 * 1000;
 
-    user.verificationTokenExpire =
-      Date.now() + 10 * 60 * 1000;
-
+    // Save to Database once
     await user.save();
 
     // Dynamic Host resolution for backend verification endpoint

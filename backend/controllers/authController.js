@@ -337,6 +337,7 @@ export const resetPassword = async (req, res, next) => {
 // @desc    Verify email
 // @route   GET /api/auth/verify-email
 // @access  Public
+//updated the verify-Email accordingly to googleoAuth  
 
 export const verifyEmail = async (req, res, next) => {
   try {

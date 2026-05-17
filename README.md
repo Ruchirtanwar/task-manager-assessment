@@ -3,6 +3,15 @@
 A full-stack task management web application built using the MERN stack. Users can register, verify email, log in, manage tasks, set priorities, and track task completion.
 
 ---
+# Live Demo
+
+## Frontend
+[https://your-frontend-url.vercel.app](https://task-manager-assessment-frontend-ten.vercel.app/)
+
+## Backend API
+[https://your-backend-url.onrender.com](https://task-manager-assessment-backend-mu.vercel.app/)
+
+---
 
 # Features
 

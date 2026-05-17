@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { CheckSquare } from 'lucide-react';
 
@@ -9,13 +9,19 @@ const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isResending, setIsResending] = useState(false);
   const { login, resendVerification } = useAuth();
+const navigate = useNavigate();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    await login(email, password);
-    setIsSubmitting(false);
-  };
+  const success = await login(email, password);
+
+  if (success) {
+    navigate('/');
+  }
+
+  setIsSubmitting(false);
+};
 
   const handleResend = async () => {
     if (!email) {

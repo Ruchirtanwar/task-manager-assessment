@@ -38,7 +38,7 @@ export const authApi = {
 },
   
   register: async (name, email, password) => {
-    const response = await fetch(`${API_URL}/auth/register`, {
+    const response = await fetch(`${API_URL}/api/auth/register`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({ name, email, password })
@@ -47,7 +47,7 @@ export const authApi = {
   },
 
   forgotPassword: async (email) => {
-    const response = await fetch(`${API_URL}/auth/forgot-password`, {
+    const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({ email })
@@ -56,7 +56,7 @@ export const authApi = {
   },
 
   resetPassword: async (token, newPassword) => {
-    const response = await fetch(`${API_URL}/auth/reset-password`, {
+    const response = await fetch(`${API_URL}/api/auth/reset-password`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({ token, newPassword })
@@ -65,7 +65,7 @@ export const authApi = {
   },
 
   verifyEmail: async (token) => {
-    const response = await fetch(`${API_URL}/auth/verify-email`, {
+    const response = await fetch(`${API_URL}/api/auth/verify-email`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({ token })
@@ -74,7 +74,7 @@ export const authApi = {
   },
 
   resendVerification: async (email) => {
-    const response = await fetch(`${API_URL}/auth/resend-verification`, {
+    const response = await fetch(`${API_URL}/api/auth/resend-verification`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({ email })
@@ -85,7 +85,7 @@ export const authApi = {
 
 export const taskApi = {
   getTasks: async () => {
-    const response = await fetch(`${API_URL}/tasks`, {
+    const response = await fetch(`${API_URL}/api/tasks`, {
       method: 'GET',
       headers: getHeaders(),
     });
@@ -93,7 +93,7 @@ export const taskApi = {
   },
   
   createTask: async (taskData) => {
-    const response = await fetch(`${API_URL}/tasks`, {
+    const response = await fetch(`${API_URL}/api/tasks`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(taskData)
@@ -102,7 +102,7 @@ export const taskApi = {
   },
   
   updateTask: async (id, taskData) => {
-    const response = await fetch(`${API_URL}/tasks/${id}`, {
+    const response = await fetch(`${API_URL}/api/tasks/${id}`, {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(taskData)
@@ -111,7 +111,7 @@ export const taskApi = {
   },
   
   deleteTask: async (id) => {
-    const response = await fetch(`${API_URL}/tasks/${id}`, {
+    const response = await fetch(`${API_URL}/api/tasks/${id}`, {
       method: 'DELETE',
       headers: getHeaders(),
     });

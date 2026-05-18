@@ -7,9 +7,7 @@ const connectDB = async () => {
   }
 
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      bufferCommands: false, // Disable Mongoose buffering to prevent Vercel serverless timeouts
-    });
+    const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log("Database connected successfully");
   } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);

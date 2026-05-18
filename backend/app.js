@@ -43,6 +43,10 @@ app.use(cors({
 // Mount routers
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+//testing route
+app.get("/",(req,res)=>{
+  res.send("testing task manager routes")
+})
 // Error handling middleware
 app.use(errorHandler);
 

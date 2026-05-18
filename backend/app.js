@@ -14,7 +14,9 @@ app.use(cookieParser());
 const allowedOrigins = [
   process.env.CLIENT_URL,
   'http://localhost:5173',
-  'http://localhost:3000'
+  'http://localhost:3000',
+  "https://task-manager-assessment-79rf.vercel.app",  // ← Yeh add karo
+
 ].filter(Boolean);
 
 app.use(cors({
